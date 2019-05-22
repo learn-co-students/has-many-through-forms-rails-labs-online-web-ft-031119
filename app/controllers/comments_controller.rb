@@ -2,15 +2,8 @@ class CommentsController < ApplicationController
 
   def create
     comment = Comment.create(comment_params)
-    binding.pry
-    puts "done"
-    redirect_to comment
+    redirect_to comment.post
   end
-
-  # def show
-  #   @comment = Comment.find)params[:id]
-  #
-  # end
 
   private
 

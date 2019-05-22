@@ -21,11 +21,12 @@ Comments:
 </ul>
 Post Coment:
 <br>
-<%= form_for @comment do |f| %>
+<%= form_for @post.comments.build do |f| %>
   <%= f.label :content %>
   <%= f.text_area :content %><br>
-  <%= f.collection_select :user_id, User.all, :id, :username, {include_blank: true} %><br>
-  <%= f.fields_for :user, @post.users.build do |user_fields| %>
+  <%= f.collection_select :user_id, User.all, :id, :username, {include_blank: 'Choose User'} %><br>
+  <%= f.hidden_field :post_id %>
+  <%= f.fields_for :user, @post.comments.last.build_user do |user_fields| %>
     <%= user_fields.label :username %>
     <%= user_fields.text_field :username %>
   <% end %>

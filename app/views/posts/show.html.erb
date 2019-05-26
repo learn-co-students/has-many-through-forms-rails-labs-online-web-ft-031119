@@ -5,23 +5,25 @@
 	<li> <%= c.name %> </li>
 	<%end%>
 </ul>	
-  <% @post.comments.each do |comment| %>
-    <%="#{comment.user.username} says: #{comment.content}"%>
-  <% end %>
+
   <ul>
 	<% @post.users.uniq.each do |user| %>
-	  <li><%= link_to user.username, user_path(user) %></li>
+	  <%= link_to user.username, user_path(user) %> says:
+	  <% user.comments.each do |comment| %>
+	    <p><%=comment.content%></p>
+	  <% end %>
 	<% end %>
   </ul>
 
   <%= form_for @post.comments.build do |comment| %>
-	 
-	  <%= comment.label "NEW COMMENT" %>
-	  <%= comment.text_area :content %>
+	  <%= comment.hidden_field :post_id, value: @post.id %> 
+	  <%= comment.label :content %><br>
+	  <%= comment.text_area :content %><br>
 
-	
-	  <%= comment.collection_select(:user_id, User.all, :id, :username)%>
-
+	  <%= comment.fields_for :user, @post.users.build do |user_comment|%>
+	   <%= comment.collection_select :user_id, User.all, :id, :username, include_blank: true %><br>
+	  	<%=	user_comment.text_field :username %><br>
+	  <%end%>
 
 
   <%= comment.submit %>

@@ -1,1 +1,34 @@
+<h1>  <%= @post.title %> </h1>
+<p>  <%= @post.content %> </p>
+<ul>
+	<% @post.categories.each do |c| %>
+	<li> <%= c.name %> </li>
+	<%end%>
+</ul>	
+  <% @post.comments.each do |comment| %>
+    <%="#{comment.user.username} says: #{comment.content}"%>
+  <% end %>
+  <ul>
+	<% @post.users.uniq.each do |user| %>
+	  <li><%= link_to user.username, user_path(user) %></li>
+	<% end %>
+  </ul>
+
+  <%= form_for @post.comments.build do |comment| %>
+	 
+	  <%= comment.label "NEW COMMENT" %>
+	  <%= comment.text_area :content %>
+
+	
+	  <%= comment.collection_select(:user_id, User.all, :id, :username)%>
+
+
+
+  <%= comment.submit %>
+
+  <%end%>
+
+
+
+
 

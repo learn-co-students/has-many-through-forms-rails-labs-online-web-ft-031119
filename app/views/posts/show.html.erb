@@ -8,9 +8,11 @@
 
   <ul>
 	<% @post.users.uniq.each do |user| %>
-	  <%= link_to user.username, user_path(user) %> says:
+	
+	  <%= link_to user.username, user_path(user) %>
+	 
 	  <% user.comments.each do |comment| %>
-	    <p><%=comment.content%></p>
+	    <p><%=user.username%> says: <%=comment.content%></p>
 	  <% end %>
 	<% end %>
   </ul>

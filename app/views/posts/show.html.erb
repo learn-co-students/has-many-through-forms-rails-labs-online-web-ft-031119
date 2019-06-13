@@ -14,7 +14,7 @@
   <% end %>
 </ul>
 <ul>
-  <% @post.users.uniq do |user|%>
+  <% @post.users.distinct do |user|%>
     <li>
       <%= link_to user.username, user_path(user)%>
     </li>
